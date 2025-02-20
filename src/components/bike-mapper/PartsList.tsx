@@ -8,6 +8,7 @@ interface PartsListProps {
   onMarkerSelect: (id: number) => void;
   onUpdateName: (id: number, name: string) => void;
   onUpdateValue: (id: number, value: string) => void;
+  onRemoveMarker: (id: number) => void;
 }
 
 export const PartsList = ({
@@ -16,6 +17,7 @@ export const PartsList = ({
   onMarkerSelect,
   onUpdateName,
   onUpdateValue,
+  onRemoveMarker,
 }: PartsListProps) => {
   if (markers.length === 0) {
     return (
@@ -34,22 +36,22 @@ export const PartsList = ({
         <div
           key={marker.id}
           className={cn(
-            "p-3 rounded-lg transition-all duration-200",
-            "hover:bg-gray-50 cursor-pointer",
+            "p-3 rounded-lg transition-all duration-200 group/item",
+            "hover:bg-gray-50",
             selectedMarkerId === marker.id && "bg-gray-50 ring-1 ring-green-200"
           )}
-          onClick={() => onMarkerSelect(marker.id)}
         >
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <div
                 className={cn(
-                  "w-6 h-6 rounded-full flex items-center justify-center shrink-0",
+                  "w-6 h-6 rounded-full flex items-center justify-center shrink-0 cursor-pointer",
                   "bg-white border-2",
                   selectedMarkerId === marker.id
                     ? "border-green-500"
                     : "border-gray-300"
                 )}
+                onClick={() => onMarkerSelect(marker.id)}
               >
                 <span className="text-sm font-medium text-gray-700">
                   {marker.id}
@@ -65,6 +67,12 @@ export const PartsList = ({
                 )}
                 placeholder="Enter part name"
               />
+              <button
+                onClick={() => onRemoveMarker(marker.id)}
+                className="opacity-0 group-hover/item:opacity-100 transition-opacity p-1 hover:text-red-500"
+              >
+                ×
+              </button>
             </div>
             <div className="flex items-center gap-2 pl-9">
               <input

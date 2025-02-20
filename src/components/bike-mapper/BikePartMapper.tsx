@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ImageArea } from "./ImageArea";
 import { PartsList } from "./PartsList";
@@ -9,7 +8,7 @@ export interface PartMarker {
   x: number;
   y: number;
   name: string;
-  value: string; // Added value field
+  value: string;
 }
 
 export const BikePartMapper = () => {
@@ -50,6 +49,17 @@ export const BikePartMapper = () => {
     );
   };
 
+  const removeMarker = (id: number) => {
+    const filteredMarkers = markers.filter(m => m.id !== id);
+    const reindexedMarkers = filteredMarkers.map((marker, index) => ({
+      ...marker,
+      id: index + 1,
+      name: marker.name === `Part ${marker.id}` ? `Part ${index + 1}` : marker.name
+    }));
+    setMarkers(reindexedMarkers);
+    setSelectedMarkerId(null);
+  };
+
   return (
     <div className="max-w-7xl mx-auto">
       <h1 className="text-3xl font-semibold text-gray-800 mb-2">Bike Part Mapper</h1>
@@ -68,6 +78,7 @@ export const BikePartMapper = () => {
           onMarkerSelect={setSelectedMarkerId}
           onUpdateName={updateMarkerName}
           onUpdateValue={updateMarkerValue}
+          onRemoveMarker={removeMarker}
         />
       </div>
     </div>
