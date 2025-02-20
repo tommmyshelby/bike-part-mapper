@@ -9,6 +9,7 @@ export interface PartMarker {
   x: number;
   y: number;
   name: string;
+  value: string; // Added value field
 }
 
 export const BikePartMapper = () => {
@@ -24,9 +25,10 @@ export const BikePartMapper = () => {
 
     const newMarker: PartMarker = {
       id: markers.length + 1,
-      x,
-      y,
+      x: Number(x.toFixed(2)),
+      y: Number(y.toFixed(2)),
       name: `Part ${markers.length + 1}`,
+      value: "",
     };
 
     setMarkers([...markers, newMarker]);
@@ -40,12 +42,20 @@ export const BikePartMapper = () => {
     );
   };
 
+  const updateMarkerValue = (id: number, value: string) => {
+    setMarkers(
+      markers.map((marker) =>
+        marker.id === id ? { ...marker, value } : marker
+      )
+    );
+  };
+
   return (
     <div className="max-w-7xl mx-auto">
       <h1 className="text-3xl font-semibold text-gray-800 mb-2">Bike Part Mapper</h1>
       <p className="text-gray-600 mb-6">Click on the image to add numbered markers</p>
       
-      <div className="grid md:grid-cols-[1fr,300px] gap-6">
+      <div className="grid md:grid-cols-[1fr,400px] gap-6">
         <ImageArea
           markers={markers}
           selectedMarkerId={selectedMarkerId}
@@ -57,6 +67,7 @@ export const BikePartMapper = () => {
           selectedMarkerId={selectedMarkerId}
           onMarkerSelect={setSelectedMarkerId}
           onUpdateName={updateMarkerName}
+          onUpdateValue={updateMarkerValue}
         />
       </div>
     </div>

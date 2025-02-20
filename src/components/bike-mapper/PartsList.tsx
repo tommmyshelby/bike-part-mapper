@@ -7,6 +7,7 @@ interface PartsListProps {
   selectedMarkerId: number | null;
   onMarkerSelect: (id: number) => void;
   onUpdateName: (id: number, name: string) => void;
+  onUpdateValue: (id: number, value: string) => void;
 }
 
 export const PartsList = ({
@@ -14,6 +15,7 @@ export const PartsList = ({
   selectedMarkerId,
   onMarkerSelect,
   onUpdateName,
+  onUpdateValue,
 }: PartsListProps) => {
   if (markers.length === 0) {
     return (
@@ -38,30 +40,47 @@ export const PartsList = ({
           )}
           onClick={() => onMarkerSelect(marker.id)}
         >
-          <div className="flex items-center gap-3">
-            <div
-              className={cn(
-                "w-6 h-6 rounded-full flex items-center justify-center",
-                "bg-white border-2",
-                selectedMarkerId === marker.id
-                  ? "border-green-500"
-                  : "border-gray-300"
-              )}
-            >
-              <span className="text-sm font-medium text-gray-700">
-                {marker.id}
-              </span>
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <div
+                className={cn(
+                  "w-6 h-6 rounded-full flex items-center justify-center shrink-0",
+                  "bg-white border-2",
+                  selectedMarkerId === marker.id
+                    ? "border-green-500"
+                    : "border-gray-300"
+                )}
+              >
+                <span className="text-sm font-medium text-gray-700">
+                  {marker.id}
+                </span>
+              </div>
+              <input
+                type="text"
+                value={marker.name}
+                onChange={(e) => onUpdateName(marker.id, e.target.value)}
+                className={cn(
+                  "flex-1 bg-transparent border-none focus:outline-none",
+                  "text-gray-700 placeholder-gray-400"
+                )}
+                placeholder="Enter part name"
+              />
             </div>
-            <input
-              type="text"
-              value={marker.name}
-              onChange={(e) => onUpdateName(marker.id, e.target.value)}
-              className={cn(
-                "flex-1 bg-transparent border-none focus:outline-none",
-                "text-gray-700 placeholder-gray-400"
-              )}
-              placeholder="Enter part name"
-            />
+            <div className="flex items-center gap-2 pl-9">
+              <input
+                type="text"
+                value={marker.value}
+                onChange={(e) => onUpdateValue(marker.id, e.target.value)}
+                className={cn(
+                  "flex-1 bg-transparent border rounded px-2 py-1",
+                  "text-sm text-gray-700 placeholder-gray-400"
+                )}
+                placeholder="Enter part value"
+              />
+              <div className="text-xs text-gray-500 shrink-0">
+                ({marker.x}%, {marker.y}%)
+              </div>
+            </div>
           </div>
         </div>
       ))}
