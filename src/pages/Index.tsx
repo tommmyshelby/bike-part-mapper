@@ -1,5 +1,5 @@
 
-import { BikePartMapper } from "@/components/bike-mapper/BikePartMapper";
+import BikePartMapper from "@/components/bike-mapper/BikePartMapper";
 
 const Index = () => {
   return (
