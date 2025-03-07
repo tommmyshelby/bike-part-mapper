@@ -1,9 +1,10 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ImageArea } from "./ImageArea";
 import { PartsList } from "./PartsList";
 import { GuidedMappingOverlay } from "./GuidedMappingOverlay";
 import { ViewSelector } from "./ViewSelector";
+import { toast } from "@/components/ui/use-toast";
 import "./BikePartMapper.css";
 
 export interface PartMarker {
@@ -12,6 +13,8 @@ export interface PartMarker {
   y: number;
   name: string;
   value: string;
+  view: "LHS" | "RHS" | "TOP";
+  isDragging?: boolean;
 }
 
 export interface Part {
@@ -27,6 +30,7 @@ const BikePartMapper = () => {
   const [currentView, setCurrentView] = useState<"LHS" | "RHS" | "TOP">("LHS");
   const [isGuidedMode, setIsGuidedMode] = useState(false);
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   const parts: Part[] = [
     { partNumber: 1, partName: "Handlebar", view: "LHS", Group: 2 },
@@ -44,12 +48,42 @@ const BikePartMapper = () => {
     { partNumber: 5, partName: "Pedals", view: "RHS", Group: 3 },
     { partNumber: 6, partName: "Chain", view: "RHS", Group: 3 },
     { partNumber: 7, partName: "Brakes", view: "RHS", Group: 2 },
-    { partNumber: 8, partName: "Frame", view: "RHS", Group: 6 }
+    { partNumber: 8, partName: "Frame", view: "RHS", Group: 6 },
+    { partNumber: 9, partName: "Handlebars", view: "TOP", Group: 2 },
+    { partNumber: 10, partName: "Stem", view: "TOP", Group: 2 },
+    { partNumber: 11, partName: "Top Tube", view: "TOP", Group: 6 },
+    { partNumber: 12, partName: "Seat Post", view: "TOP", Group: 1 }
   ];
 
   const filteredParts = parts.filter(part => part.view === currentView);
   const currentPart = filteredParts[currentPartIndex];
   
+  // Handle view changes and auto-advancing to next view
+  useEffect(() => {
+    setCurrentPartIndex(0);
+    setSelectedMarkerId(null);
+  }, [currentView]);
+
+  // Check if all parts in current view are mapped
+  useEffect(() => {
+    if (!isGuidedMode) return;
+    
+    const allPartsMapped = markersForCurrentView.length === filteredParts.length;
+    if (allPartsMapped && isGuidedMode) {
+      toast({
+        title: "View complete!",
+        description: "All parts in this view have been mapped. Moving to next view.",
+      });
+      
+      // Auto advance to next view
+      const views = ["LHS", "RHS", "TOP"] as const;
+      const currentIndex = views.indexOf(currentView);
+      const nextIndex = (currentIndex + 1) % views.length;
+      setCurrentView(views[nextIndex]);
+      setIsGuidedMode(false);
+    }
+  }, [markers, currentView, isGuidedMode]);
+
   const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!e.currentTarget || !isGuidedMode) return;
 
@@ -59,15 +93,16 @@ const BikePartMapper = () => {
 
     if (isGuidedMode && currentPart) {
       const newMarker: PartMarker = {
-        id: currentPart.partNumber,
+        id: Date.now(), // Use timestamp for unique ID
         x: Number(x.toFixed(2)),
         y: Number(y.toFixed(2)),
         name: currentPart.partName,
         value: "",
+        view: currentView,
       };
 
       const existingMarkerIndex = markers.findIndex(
-        m => m.name === currentPart.partName && m.id === currentPart.partNumber
+        m => m.name === currentPart.partName && m.view === currentView
       );
 
       if (existingMarkerIndex >= 0) {
@@ -86,8 +121,22 @@ const BikePartMapper = () => {
         setCurrentPartIndex(currentPartIndex + 1);
       } else {
         setIsGuidedMode(false);
+        toast({
+          title: "View mapping complete!",
+          description: "All parts in this view have been mapped.",
+        });
       }
     }
+  };
+
+  const handleMarkerDrag = (id: number, x: number, y: number) => {
+    setMarkers(prev => 
+      prev.map(marker => 
+        marker.id === id 
+          ? { ...marker, x: Number(x.toFixed(2)), y: Number(y.toFixed(2)) } 
+          : marker
+      )
+    );
   };
 
   const updateMarkerName = (id: number, name: string) => {
@@ -123,17 +172,16 @@ const BikePartMapper = () => {
     setIsGuidedMode(false);
   };
 
-  const markersForCurrentView = markers.filter(marker => {
-    const matchingPart = parts.find(
-      part => part.partName === marker.name && part.view === currentView
-    );
-    return !!matchingPart;
-  });
+  const markersForCurrentView = markers.filter(marker => marker.view === currentView);
 
   const calculateProgress = () => {
     const totalPartsInView = filteredParts.length;
     const mappedPartsInView = markersForCurrentView.length;
     return (mappedPartsInView / totalPartsInView) * 100;
+  };
+
+  const handleImageUpload = (imageUrl: string) => {
+    setUploadedImage(imageUrl);
   };
 
   return (
@@ -163,6 +211,9 @@ const BikePartMapper = () => {
             onImageClick={handleImageClick}
             onMarkerClick={setSelectedMarkerId}
             onStartMapping={startGuidedMode}
+            onImageUpload={handleImageUpload}
+            uploadedImage={uploadedImage}
+            onMarkerDrag={handleMarkerDrag}
           />
           
           {isGuidedMode && currentPart && (
@@ -174,7 +225,7 @@ const BikePartMapper = () => {
         </div>
       </div>
       
-      {!isGuidedMode && markersForCurrentView.length > 0 && (
+      {!isGuidedMode && markersForCurrentView.length > 0 && markersForCurrentView.length < filteredParts.length && (
         <button
           className="guided-mode-button"
           onClick={startGuidedMode}

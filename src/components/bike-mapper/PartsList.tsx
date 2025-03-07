@@ -1,6 +1,6 @@
 
 import { type PartMarker, type Part } from "./BikePartMapper";
-import { Check, Pencil } from "lucide-react";
+import { Check, Pencil, Trash2 } from "lucide-react";
 import "./PartsList.css";
 
 interface PartsListProps {
@@ -66,7 +66,10 @@ export const PartsList = ({
                   </span>
                   {isMapped && matchingMarker && (
                     <div className="part-actions">
-                      <Pencil className="part-edit" />
+                      <Pencil className="part-edit" onClick={(e) => {
+                        e.stopPropagation();
+                        onMarkerSelect(matchingMarker.id);
+                      }} />
                     </div>
                   )}
                 </div>
@@ -86,6 +89,19 @@ export const PartsList = ({
                     <div className="part-position">
                       Position: ({matchingMarker.x.toFixed(0)}%, {matchingMarker.y.toFixed(0)}%)
                     </div>
+                    <div className="part-drag-hint">
+                      You can drag the marker to reposition it
+                    </div>
+                    <button 
+                      className="remove-marker-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onRemoveMarker(matchingMarker.id);
+                      }}
+                    >
+                      <Trash2 size={14} />
+                      Remove marker
+                    </button>
                   </div>
                 )}
               </div>

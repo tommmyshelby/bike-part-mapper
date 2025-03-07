@@ -111,6 +111,12 @@
   box-shadow: 0 0 0 3px white, 0 4px 8px rgba(59, 130, 246, 0.5);
 }
 
+.marker-pin-dragging {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px white, 0 8px 16px rgba(59, 130, 246, 0.6);
+  z-index: 50;
+}
+
 .marker-number {
   font-size: 14px;
   font-weight: 600;
@@ -155,6 +161,13 @@
   margin-top: 4px;
   font-size: 11px;
   opacity: 0.8;
+}
+
+.marker-drag-hint {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #93c5fd;
+  font-style: italic;
 }
 
 .welcome-modal {
