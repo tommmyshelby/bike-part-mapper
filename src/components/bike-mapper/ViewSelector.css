@@ -1,0 +1,38 @@
+
+.view-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.nav-button {
+  padding: 0.5rem;
+  border-radius: 9999px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  background-color: #f3f4f6;
+}
+
+.view-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+}
+
+.view-button:hover {
+  background-color: #f9fafb;
+}
+
+.view-button-active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}

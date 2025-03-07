@@ -4,7 +4,7 @@ import { ImageArea } from "./ImageArea";
 import { PartsList } from "./PartsList";
 import { GuidedMappingOverlay } from "./GuidedMappingOverlay";
 import { ViewSelector } from "./ViewSelector";
-import { cn } from "@/lib/utils";
+import "./BikePartMapper.css";
 
 export interface PartMarker {
   id: number;
@@ -167,31 +167,26 @@ const BikePartMapper = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-2">Bike Part Mapper</h1>
-      <p className="text-gray-600 mb-4">
+    <div className="bike-part-mapper">
+      <h1 className="bike-mapper-title">Bike Part Mapper</h1>
+      <p className="bike-mapper-description">
         {isGuidedMode 
           ? "Click on the image to mark the highlighted part" 
           : "Click on the image to add custom markers"}
       </p>
       
-      <div className="flex justify-between items-center mb-4">
-        <div className="w-full max-w-2xl bg-gray-200 rounded-full h-4 mr-4">
+      <div className="progress-container">
+        <div className="progress-bar">
           <div 
-            className="bg-green-500 h-4 rounded-full transition-all" 
+            className="progress-bar-fill"
             style={{ width: `${calculateProgress()}%` }}
           ></div>
         </div>
-        <div className="flex gap-2">
-          <button 
-            className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-            onClick={() => setIsGuidedMode(false)}
-          >
+        <div className="action-buttons">
+          <button className="action-button" onClick={() => setIsGuidedMode(false)}>
             Draft
           </button>
-          <button 
-            className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-          >
+          <button className="action-button">
             Save
           </button>
         </div>
@@ -199,7 +194,7 @@ const BikePartMapper = () => {
       
       <ViewSelector currentView={currentView} onViewChange={switchView} />
       
-      <div className="grid md:grid-cols-[300px,1fr] gap-6 mt-4">
+      <div className="main-content">
         <PartsList
           parts={filteredParts}
           currentPartIndex={currentPartIndex}
@@ -210,7 +205,7 @@ const BikePartMapper = () => {
           onUpdateValue={updateMarkerValue}
           onRemoveMarker={removeMarker}
         />
-        <div className="relative">
+        <div className="image-container">
           <ImageArea
             markers={markersForCurrentView}
             selectedMarkerId={selectedMarkerId}
@@ -223,9 +218,9 @@ const BikePartMapper = () => {
               progress={(currentPartIndex / filteredParts.length) * 100}
             />
           )}
-          <div className="mt-2 bg-gray-200 rounded-full h-3">
+          <div className="progress-indicator">
             <div 
-              className="bg-blue-500 h-3 rounded-full transition-all" 
+              className="progress-indicator-fill"
               style={{ width: `${(currentPartIndex / filteredParts.length) * 100}%` }}
             ></div>
           </div>
@@ -234,7 +229,7 @@ const BikePartMapper = () => {
       
       {!isGuidedMode && (
         <button
-          className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          className="guided-mode-button"
           onClick={startGuidedMode}
         >
           Start Guided Mapping

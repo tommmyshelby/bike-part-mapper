@@ -1,0 +1,141 @@
+
+.parts-list {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.parts-list-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.empty-message {
+  color: #6b7280;
+  text-align: center;
+}
+
+.parts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.part-item {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s;
+}
+
+.part-item-mapped {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.part-item-active {
+  box-shadow: 0 0 0 2px #93c5fd;
+}
+
+.part-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.part-number {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e7eb;
+  color: #4b5563;
+  flex-shrink: 0;
+}
+
+.part-number-mapped {
+  background-color: #22c55e;
+  color: white;
+}
+
+.part-number-active {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.part-name {
+  flex: 1;
+  color: #4b5563;
+}
+
+.part-name-active {
+  font-weight: 500;
+}
+
+.part-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.edit-button {
+  padding: 0.25rem;
+  font-size: 0.75rem;
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 0.25rem;
+  border: 1px solid #bfdbfe;
+}
+
+.edit-button:hover {
+  background-color: #dbeafe;
+}
+
+.remove-button {
+  padding: 0.25rem;
+  font-size: 0.75rem;
+  background-color: #fef2f2;
+  color: #dc2626;
+  border-radius: 0.25rem;
+  border: 1px solid #fecaca;
+}
+
+.remove-button:hover {
+  background-color: #fee2e2;
+}
+
+.part-details {
+  margin-top: 0.5rem;
+  padding-left: 2.25rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.part-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.value-input {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  color: #4b5563;
+}
+
+.part-position {
+  margin-top: 0.25rem;
+}

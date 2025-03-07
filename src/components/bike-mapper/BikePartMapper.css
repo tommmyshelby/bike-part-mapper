@@ -1,0 +1,103 @@
+
+.bike-part-mapper {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.bike-mapper-title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.bike-mapper-description {
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  width: 100%;
+  max-width: 32rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 1rem;
+  margin-right: 1rem;
+}
+
+.progress-bar-fill {
+  background-color: #22c55e;
+  height: 1rem;
+  border-radius: 9999px;
+  transition: width 0.3s;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background-color: #f9fafb;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.image-container {
+  position: relative;
+}
+
+.progress-indicator {
+  margin-top: 0.5rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.75rem;
+}
+
+.progress-indicator-fill {
+  background-color: #3b82f6;
+  height: 0.75rem;
+  border-radius: 9999px;
+  transition: width 0.3s;
+}
+
+.guided-mode-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.guided-mode-button:hover {
+  background-color: #2563eb;
+}

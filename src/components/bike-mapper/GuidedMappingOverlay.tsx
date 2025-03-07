@@ -1,5 +1,6 @@
 
 import { Part } from "./BikePartMapper";
+import "./GuidedMappingOverlay.css";
 
 interface GuidedMappingOverlayProps {
   currentPart: Part;
@@ -11,8 +12,8 @@ export const GuidedMappingOverlay = ({
   progress 
 }: GuidedMappingOverlayProps) => {
   return (
-    <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center">
-      <div className="bg-blue-500/80 text-white px-4 py-2 rounded-full text-sm font-medium mb-2">
+    <div className="guided-mapping-overlay">
+      <div className="guided-mapping-instruction">
         Click on the image to mark: {currentPart.partName}
       </div>
     </div>

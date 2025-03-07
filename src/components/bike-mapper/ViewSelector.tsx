@@ -1,6 +1,6 @@
 
-import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import "./ViewSelector.css";
 
 interface ViewSelectorProps {
   currentView: "LHS" | "RHS" | "TOP";
@@ -26,9 +26,9 @@ export const ViewSelector = ({
   };
   
   return (
-    <div className="flex items-center justify-center gap-2">
+    <div className="view-selector">
       <button 
-        className="p-2 rounded-full hover:bg-gray-100"
+        className="nav-button"
         onClick={goToPrevView}
       >
         <ChevronLeft size={20} />
@@ -37,12 +37,7 @@ export const ViewSelector = ({
       {views.map((view) => (
         <button
           key={view}
-          className={cn(
-            "px-4 py-2 rounded-lg transition-colors",
-            currentView === view 
-              ? "bg-blue-500 text-white" 
-              : "bg-white border border-gray-300 hover:bg-gray-50"
-          )}
+          className={`view-button ${currentView === view ? 'view-button-active' : ''}`}
           onClick={() => onViewChange(view)}
         >
           {view}
@@ -50,7 +45,7 @@ export const ViewSelector = ({
       ))}
       
       <button 
-        className="p-2 rounded-full hover:bg-gray-100"
+        className="nav-button"
         onClick={goToNextView}
       >
         <ChevronRight size={20} />
