@@ -1,5 +1,6 @@
 
 import { type PartMarker, type Part } from "./BikePartMapper";
+import { Check, Pencil } from "lucide-react";
 import "./PartsList.css";
 
 interface PartsListProps {
@@ -25,10 +26,17 @@ export const PartsList = ({
 }: PartsListProps) => {
   // Get a list of mapped part names to highlight them
   const mappedPartNames = markers.map(m => m.name);
+  const mappedCount = markers.length;
+  const totalCount = parts.length;
   
   return (
     <div className="parts-list">
-      <h2 className="parts-list-title">Parts to Map</h2>
+      <h2 className="parts-list-title">
+        Bike Parts
+        <span className="parts-mapped-count">
+          {mappedCount} of {totalCount} parts mapped
+        </span>
+      </h2>
       
       {parts.length === 0 ? (
         <p className="empty-message">
@@ -45,37 +53,25 @@ export const PartsList = ({
               <div
                 key={`${part.view}-${part.partNumber}`}
                 className={`part-item ${isMapped ? 'part-item-mapped' : ''} ${isActive ? 'part-item-active' : ''}`}
+                onClick={() => matchingMarker && onMarkerSelect(matchingMarker.id)}
               >
                 <div className="part-header">
-                  <div
-                    className={`part-number ${isMapped ? 'part-number-mapped' : ''} ${isActive && !isMapped ? 'part-number-active' : ''}`}
-                  >
-                    <span>
-                      {part.partNumber}
-                    </span>
+                  <div className="part-status">
+                    {isMapped ? (
+                      <Check className="part-check" />
+                    ) : null}
                   </div>
                   <span className={`part-name ${isActive ? 'part-name-active' : ''}`}>
                     {part.partName}
                   </span>
                   {isMapped && matchingMarker && (
                     <div className="part-actions">
-                      <button
-                        onClick={() => onMarkerSelect(matchingMarker.id)}
-                        className="edit-button"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => onRemoveMarker(matchingMarker.id)}
-                        className="remove-button"
-                      >
-                        ×
-                      </button>
+                      <Pencil className="part-edit" />
                     </div>
                   )}
                 </div>
                 
-                {matchingMarker && (
+                {matchingMarker && selectedMarkerId === matchingMarker.id && (
                   <div className="part-details">
                     <div className="part-value">
                       <span>Value:</span>
@@ -88,7 +84,7 @@ export const PartsList = ({
                       />
                     </div>
                     <div className="part-position">
-                      Position: ({matchingMarker.x}%, {matchingMarker.y}%)
+                      Position: ({matchingMarker.x.toFixed(0)}%, {matchingMarker.y.toFixed(0)}%)
                     </div>
                   </div>
                 )}

@@ -14,7 +14,8 @@ export const GuidedMappingOverlay = ({
   return (
     <div className="guided-mapping-overlay">
       <div className="guided-mapping-instruction">
-        Click on the image to mark: {currentPart.partName}
+        Click to place: {currentPart.partName}
+        <span className="guided-mapping-progress">{Math.floor(progress)}%</span>
       </div>
     </div>
   );

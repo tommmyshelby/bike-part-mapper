@@ -9,6 +9,7 @@ interface ImageAreaProps {
   selectedMarkerId: number | null;
   onImageClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   onMarkerClick: (id: number) => void;
+  onStartMapping: () => void;
 }
 
 export const ImageArea = ({
@@ -16,15 +17,23 @@ export const ImageArea = ({
   selectedMarkerId,
   onImageClick,
   onMarkerClick,
+  onStartMapping,
 }: ImageAreaProps) => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setUploadedImage(imageUrl);
+      setShowWelcomeModal(true);
     }
+  };
+
+  const handleStartMapping = () => {
+    setShowWelcomeModal(false);
+    onStartMapping();
   };
 
   return (
@@ -80,6 +89,23 @@ export const ImageArea = ({
               </button>
             ))}
           </div>
+          
+          {showWelcomeModal && (
+            <div className="welcome-modal">
+              <div className="welcome-modal-content">
+                <h3 className="welcome-modal-title">Let's Map Your Bike Parts</h3>
+                <p className="welcome-modal-text">
+                  Click on the bike image to place markers for each part in sequence.
+                </p>
+                <button 
+                  className="welcome-modal-button"
+                  onClick={handleStartMapping}
+                >
+                  Start Mapping
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

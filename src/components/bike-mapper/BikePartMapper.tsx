@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ImageArea } from "./ImageArea";
 import { PartsList } from "./PartsList";
@@ -24,39 +25,33 @@ const BikePartMapper = () => {
   const [markers, setMarkers] = useState<PartMarker[]>([]);
   const [selectedMarkerId, setSelectedMarkerId] = useState<number | null>(null);
   const [currentView, setCurrentView] = useState<"LHS" | "RHS" | "TOP">("LHS");
-  const [isGuidedMode, setIsGuidedMode] = useState(true);
+  const [isGuidedMode, setIsGuidedMode] = useState(false);
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
 
   const parts: Part[] = [
-    { partNumber: 1, partName: "Front Disc Brake", view: "LHS", Group: 1 },
-    { partNumber: 2, partName: "Front Tire", view: "LHS", Group: 1 },
-    { partNumber: 3, partName: "Front Mudguard", view: "LHS", Group: 1 },
-    { partNumber: 4, partName: "Front Suspension", view: "LHS", Group: 1 },
-    { partNumber: 5, partName: "Left Handlebar", view: "LHS", Group: 2 },
-    { partNumber: 6, partName: "Clutch Lever", view: "LHS", Group: 2 },
-    { partNumber: 7, partName: "Gear Shifter", view: "LHS", Group: 3 },
-    { partNumber: 8, partName: "Side Stand", view: "LHS", Group: 4 },
-    { partNumber: 9, partName: "Left Foot Peg", view: "LHS", Group: 3 },
-    { partNumber: 10, partName: "Rear Disc Brake", view: "LHS", Group: 5 },
-    { partNumber: 11, partName: "Battery Compartment", view: "LHS", Group: 6 },
-    { partNumber: 1, partName: "Front Brake Lever", view: "RHS", Group: 2 },
-    { partNumber: 2, partName: "Right Handlebar", view: "RHS", Group: 2 },
-    { partNumber: 3, partName: "Throttle Grip", view: "RHS", Group: 2 },
-    { partNumber: 4, partName: "Exhaust Pipe", view: "RHS", Group: 6 },
-    { partNumber: 5, partName: "Rear Brake Pedal", view: "RHS", Group: 3 },
-    { partNumber: 6, partName: "Kick Starter", view: "RHS", Group: 3 },
-    { partNumber: 7, partName: "Rear Suspension", view: "RHS", Group: 5 },
-    { partNumber: 8, partName: "Rear Tire", view: "RHS", Group: 5 },
-    { partNumber: 9, partName: "Rear Chain Sprocket", view: "RHS", Group: 3 },
-    { partNumber: 10, partName: "Engine Block", view: "RHS", Group: 6 },
-    { partNumber: 11, partName: "Oil Filter", view: "RHS", Group: 6 }
+    { partNumber: 1, partName: "Handlebar", view: "LHS", Group: 2 },
+    { partNumber: 2, partName: "Saddle", view: "LHS", Group: 1 },
+    { partNumber: 3, partName: "Front Wheel", view: "LHS", Group: 1 },
+    { partNumber: 4, partName: "Rear Wheel", view: "LHS", Group: 1 },
+    { partNumber: 5, partName: "Pedals", view: "LHS", Group: 3 },
+    { partNumber: 6, partName: "Chain", view: "LHS", Group: 3 },
+    { partNumber: 7, partName: "Brakes", view: "LHS", Group: 2 },
+    { partNumber: 8, partName: "Frame", view: "LHS", Group: 6 },
+    { partNumber: 1, partName: "Handlebar", view: "RHS", Group: 2 },
+    { partNumber: 2, partName: "Saddle", view: "RHS", Group: 1 },
+    { partNumber: 3, partName: "Front Wheel", view: "RHS", Group: 1 },
+    { partNumber: 4, partName: "Rear Wheel", view: "RHS", Group: 1 },
+    { partNumber: 5, partName: "Pedals", view: "RHS", Group: 3 },
+    { partNumber: 6, partName: "Chain", view: "RHS", Group: 3 },
+    { partNumber: 7, partName: "Brakes", view: "RHS", Group: 2 },
+    { partNumber: 8, partName: "Frame", view: "RHS", Group: 6 }
   ];
 
   const filteredParts = parts.filter(part => part.view === currentView);
   const currentPart = filteredParts[currentPartIndex];
   
   const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!e.currentTarget) return;
+    if (!e.currentTarget || !isGuidedMode) return;
 
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -92,16 +87,6 @@ const BikePartMapper = () => {
       } else {
         setIsGuidedMode(false);
       }
-    } else {
-      const newMarker: PartMarker = {
-        id: markers.length + 1,
-        x: Number(x.toFixed(2)),
-        y: Number(y.toFixed(2)),
-        name: `Part ${markers.length + 1}`,
-        value: "",
-      };
-
-      setMarkers([...markers, newMarker]);
     }
   };
 
@@ -123,12 +108,7 @@ const BikePartMapper = () => {
 
   const removeMarker = (id: number) => {
     const filteredMarkers = markers.filter(m => m.id !== id);
-    const reindexedMarkers = filteredMarkers.map((marker, index) => ({
-      ...marker,
-      id: index + 1,
-      name: marker.name === `Part ${marker.id}` ? `Part ${index + 1}` : marker.name
-    }));
-    setMarkers(reindexedMarkers);
+    setMarkers(filteredMarkers);
     setSelectedMarkerId(null);
   };
 
@@ -140,7 +120,7 @@ const BikePartMapper = () => {
   const switchView = (view: "LHS" | "RHS" | "TOP") => {
     setCurrentView(view);
     setCurrentPartIndex(0);
-    setIsGuidedMode(true);
+    setIsGuidedMode(false);
   };
 
   const markersForCurrentView = markers.filter(marker => {
@@ -158,32 +138,6 @@ const BikePartMapper = () => {
 
   return (
     <div className="bike-part-mapper">
-      <h1 className="bike-mapper-title">Bike Part Mapper</h1>
-      <p className="bike-mapper-description">
-        {isGuidedMode 
-          ? "Click on the image to mark the highlighted part" 
-          : "Click on the image to add custom markers"}
-      </p>
-      
-      <div className="progress-container">
-        <div className="progress-bar">
-          <div 
-            className="progress-bar-fill"
-            style={{ width: `${calculateProgress()}%` }}
-          ></div>
-        </div>
-        <div className="action-buttons">
-          <button className="action-button" onClick={() => setIsGuidedMode(false)}>
-            Draft
-          </button>
-          <button className="action-button">
-            Save
-          </button>
-        </div>
-      </div>
-      
-      <ViewSelector currentView={currentView} onViewChange={switchView} />
-      
       <div className="main-content">
         <PartsList
           parts={filteredParts}
@@ -196,33 +150,36 @@ const BikePartMapper = () => {
           onRemoveMarker={removeMarker}
         />
         <div className="image-container">
+          <h1 className="bike-mapper-title">Bike Part Mapper</h1>
+          <p className="bike-mapper-description">
+            Click on the bike image to place markers for each part in sequence. You can edit marker positions at any time.
+          </p>
+          
+          <ViewSelector currentView={currentView} onViewChange={switchView} />
+          
           <ImageArea
             markers={markersForCurrentView}
             selectedMarkerId={selectedMarkerId}
             onImageClick={handleImageClick}
             onMarkerClick={setSelectedMarkerId}
+            onStartMapping={startGuidedMode}
           />
+          
           {isGuidedMode && currentPart && (
             <GuidedMappingOverlay
               currentPart={currentPart}
               progress={(currentPartIndex / filteredParts.length) * 100}
             />
           )}
-          <div className="progress-indicator">
-            <div 
-              className="progress-indicator-fill"
-              style={{ width: `${(currentPartIndex / filteredParts.length) * 100}%` }}
-            ></div>
-          </div>
         </div>
       </div>
       
-      {!isGuidedMode && (
+      {!isGuidedMode && markersForCurrentView.length > 0 && (
         <button
           className="guided-mode-button"
           onClick={startGuidedMode}
         >
-          Start Guided Mapping
+          Continue Guided Mapping
         </button>
       )}
     </div>

@@ -4,27 +4,28 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .bike-mapper-title {
   font-size: 24px;
   font-weight: 600;
   color: #1f2937;
-  margin-bottom: 8px;
+  margin: 16px 0 8px 16px;
 }
 
 .bike-mapper-description {
   color: #4b5563;
-  margin-bottom: 16px;
+  margin: 0 0 16px 16px;
 }
 
 .progress-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin: 0 16px 16px 16px;
 }
 
 .progress-bar {
@@ -66,10 +67,10 @@
 
 .main-content {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 24px;
+  grid-template-columns: 240px 1fr;
+  gap: 0;
   flex: 1;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px);
   overflow: hidden;
 }
 
@@ -85,6 +86,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0 16px 16px 0;
 }
 
 .progress-indicator {
@@ -103,9 +105,9 @@
 }
 
 .guided-mode-button {
-  margin-top: 16px;
+  margin: 16px;
   padding: 10px 20px;
-  background-color: #3b82f6;
+  background-color: #1f2937;
   color: white;
   border: none;
   border-radius: 6px;
@@ -115,5 +117,47 @@
 }
 
 .guided-mode-button:hover {
-  background-color: #2563eb;
+  background-color: #111827;
+}
+
+/* Status modal styles */
+.status-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  z-index: 20;
+  max-width: 400px;
+  width: 90%;
+}
+
+.status-modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.status-modal-text {
+  margin-bottom: 24px;
+  color: #4b5563;
+}
+
+.status-modal-button {
+  background-color: #1f2937;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.status-modal-button:hover {
+  background-color: #111827;
 }

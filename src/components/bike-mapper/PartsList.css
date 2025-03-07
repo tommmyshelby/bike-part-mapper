@@ -1,22 +1,27 @@
 
 .parts-list {
-  background-color: white;
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  background-color: #f8f9fa;
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-right: 1px solid #e5e7eb;
 }
 
 .parts-list-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #1f2937;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f3f4f6;
+  margin: 0;
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.parts-mapped-count {
+  display: block;
+  font-size: 13px;
+  font-weight: normal;
+  color: #6b7280;
+  margin-top: 4px;
 }
 
 .empty-message {
@@ -28,10 +33,9 @@
 .parts-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   overflow-y: auto;
   flex: 1;
-  padding-right: 4px;
+  padding: 8px;
 }
 
 .parts-container::-webkit-scrollbar {
@@ -54,24 +58,26 @@
 
 .part-item {
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 4px;
   background-color: white;
-  border: 1px solid #f3f4f6;
+  margin-bottom: 4px;
+  cursor: pointer;
   transition: all 0.2s;
+  border-left: 3px solid transparent;
 }
 
 .part-item:hover {
-  border-color: #e5e7eb;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: #f3f4f6;
 }
 
 .part-item-mapped {
   background-color: #f0fdf4;
-  border-color: #dcfce7;
+  border-left-color: #22c55e;
 }
 
 .part-item-active {
-  box-shadow: 0 0 0 2px #93c5fd;
+  background-color: #f0f9ff;
+  border-left-color: #3b82f6;
 }
 
 .part-header {
@@ -80,28 +86,23 @@
   gap: 12px;
 }
 
-.part-number {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+.part-status {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e5e7eb;
-  color: #4b5563;
   flex-shrink: 0;
-  font-size: 12px;
-  font-weight: 600;
 }
 
-.part-number-mapped {
-  background-color: #22c55e;
-  color: white;
+.part-check {
+  color: #22c55e;
+  width: 18px;
+  height: 18px;
 }
 
-.part-number-active {
-  background-color: #3b82f6;
-  color: white;
+.part-edit {
+  color: #6b7280;
+  width: 16px;
+  height: 16px;
 }
 
 .part-name {
