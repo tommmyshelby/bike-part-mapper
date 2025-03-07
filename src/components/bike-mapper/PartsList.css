@@ -1,46 +1,73 @@
 
 .parts-list {
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(4px);
-  padding: 1rem;
-  border-radius: 0.5rem;
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
   border: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  max-height: 600px;
-  overflow-y: auto;
+  height: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .parts-list-title {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 600;
   color: #1f2937;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
 }
 
 .empty-message {
   color: #6b7280;
   text-align: center;
+  padding: 20px 0;
 }
 
 .parts-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 4px;
+}
+
+.parts-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.parts-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.parts-container::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.parts-container::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }
 
 .part-item {
-  padding: 0.75rem;
-  border-radius: 0.5rem;
+  padding: 12px;
+  border-radius: 6px;
   background-color: white;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #f3f4f6;
   transition: all 0.2s;
+}
+
+.part-item:hover {
+  border-color: #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .part-item-mapped {
   background-color: #f0fdf4;
-  border-color: #bbf7d0;
+  border-color: #dcfce7;
 }
 
 .part-item-active {
@@ -50,19 +77,21 @@
 .part-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 12px;
 }
 
 .part-number {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 9999px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #e5e7eb;
   color: #4b5563;
   flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .part-number-mapped {
@@ -78,24 +107,27 @@
 .part-name {
   flex: 1;
   color: #4b5563;
+  font-size: 14px;
 }
 
 .part-name-active {
   font-weight: 500;
+  color: #1f2937;
 }
 
 .part-actions {
   display: flex;
-  gap: 0.25rem;
+  gap: 4px;
 }
 
 .edit-button {
-  padding: 0.25rem;
-  font-size: 0.75rem;
+  padding: 4px 8px;
+  font-size: 12px;
   background-color: #eff6ff;
   color: #1d4ed8;
-  border-radius: 0.25rem;
+  border-radius: 4px;
   border: 1px solid #bfdbfe;
+  transition: all 0.2s;
 }
 
 .edit-button:hover {
@@ -103,12 +135,13 @@
 }
 
 .remove-button {
-  padding: 0.25rem;
-  font-size: 0.75rem;
+  padding: 2px 8px;
+  font-size: 14px;
   background-color: #fef2f2;
   color: #dc2626;
-  border-radius: 0.25rem;
+  border-radius: 4px;
   border: 1px solid #fecaca;
+  transition: all 0.2s;
 }
 
 .remove-button:hover {
@@ -116,26 +149,34 @@
 }
 
 .part-details {
-  margin-top: 0.5rem;
-  padding-left: 2.25rem;
-  font-size: 0.75rem;
+  margin-top: 8px;
+  padding-left: 36px;
+  font-size: 12px;
   color: #6b7280;
 }
 
 .part-value {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .value-input {
   flex: 1;
   border: 1px solid #d1d5db;
-  border-radius: 0.25rem;
-  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  padding: 4px 8px;
   color: #4b5563;
+  font-size: 12px;
+}
+
+.value-input:focus {
+  outline: 2px solid #93c5fd;
+  border-color: transparent;
 }
 
 .part-position {
-  margin-top: 0.25rem;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #9ca3af;
 }

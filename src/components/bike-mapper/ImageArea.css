@@ -1,17 +1,73 @@
 
 .image-area {
   position: relative;
-  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: calc(100vh - 160px);
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   overflow: hidden;
+}
+
+.upload-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 20px;
+  text-align: center;
+}
+
+.upload-icon-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.upload-icon {
+  width: 40px;
+  height: 40px;
+  color: #6b7280;
+}
+
+.upload-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.upload-hint {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.upload-input {
+  display: none;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .image-click-area {
   position: absolute;
   inset: 0;
   cursor: crosshair;
+  overflow: hidden;
 }
 
 .bike-image {
@@ -20,36 +76,44 @@
   object-fit: contain;
 }
 
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
 .marker-pin {
   position: absolute;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: -0.75rem;
-  margin-top: -0.75rem;
-  border-radius: 9999px;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  margin-top: -14px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  border: 2px solid #d1d5db;
+  background-color: #22c55e;
+  box-shadow: 0 0 0 2px white, 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: none;
   transition: all 0.2s;
+  z-index: 10;
 }
 
 .marker-pin:hover {
-  transform: scale(1.1);
-  border-color: #22c55e;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 3px white, 0 6px 8px rgba(0, 0, 0, 0.3);
 }
 
 .marker-pin-selected {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+  background-color: #3b82f6;
+  box-shadow: 0 0 0 3px white, 0 4px 8px rgba(59, 130, 246, 0.5);
 }
 
 .marker-number {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
 }
 
 .marker-tooltip {
@@ -57,16 +121,29 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
+  margin-bottom: 8px;
+  padding: 8px 12px;
   background-color: #1f2937;
   color: white;
-  font-size: 0.75rem;
-  border-radius: 0.25rem;
+  font-size: 12px;
+  border-radius: 4px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;
   white-space: nowrap;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+}
+
+.marker-tooltip:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #1f2937 transparent transparent transparent;
 }
 
 .marker-pin:hover .marker-tooltip {
@@ -74,5 +151,7 @@
 }
 
 .marker-position {
-  margin-top: 0.25rem;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.8;
 }

@@ -1,5 +1,7 @@
 
+import React, { useState } from "react";
 import { type PartMarker } from "./BikePartMapper";
+import { Upload, Image as ImageIcon } from "lucide-react";
 import "./ImageArea.css";
 
 interface ImageAreaProps {
@@ -15,38 +17,71 @@ export const ImageArea = ({
   onImageClick,
   onMarkerClick,
 }: ImageAreaProps) => {
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setUploadedImage(imageUrl);
+    }
+  };
+
   return (
     <div className="image-area">
-      <div
-        className="image-click-area"
-        onClick={onImageClick}
-      >
-        <img
-          src="/lovable-uploads/80d69c72-1b6c-432a-a82f-2320ca36e716.png"
-          alt="Bike"
-          className="bike-image"
-        />
-        {markers.map((marker) => (
-          <button
-            key={marker.id}
-            className={`marker-pin ${selectedMarkerId === marker.id ? 'marker-pin-selected' : ''}`}
-            style={{ left: `${marker.x}%`, top: `${marker.y}%` }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onMarkerClick(marker.id);
-            }}
-          >
-            <span className="marker-number">
-              {marker.id}
-            </span>
-            <div className="marker-tooltip">
-              {marker.name}
-              {marker.value && <> - {marker.value}</>}
-              <div className="marker-position">x: {marker.x}%, y: {marker.y}%</div>
+      {!uploadedImage ? (
+        <div className="upload-container">
+          <label htmlFor="image-upload" className="upload-label">
+            <div className="upload-icon-container">
+              <Upload className="upload-icon" />
+              <ImageIcon className="upload-icon" />
             </div>
-          </button>
-        ))}
-      </div>
+            <span className="upload-text">Upload an image to start mapping</span>
+            <span className="upload-hint">Click or drag and drop</span>
+          </label>
+          <input 
+            type="file" 
+            id="image-upload" 
+            accept="image/*" 
+            onChange={handleImageUpload} 
+            className="upload-input"
+          />
+        </div>
+      ) : (
+        <div className="image-container">
+          <div
+            className="image-click-area"
+            onClick={onImageClick}
+          >
+            <img
+              src={uploadedImage}
+              alt="Uploaded image"
+              className="bike-image"
+            />
+            <div className="image-overlay"></div>
+            {markers.map((marker) => (
+              <button
+                key={marker.id}
+                className={`marker-pin ${selectedMarkerId === marker.id ? 'marker-pin-selected' : ''}`}
+                style={{ left: `${marker.x}%`, top: `${marker.y}%` }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onMarkerClick(marker.id);
+                }}
+              >
+                <span className="marker-number">
+                  {marker.id}
+                </span>
+                <div className="marker-tooltip">
+                  {marker.name}
+                  {marker.value && <> - {marker.value}</>}
+                  <div className="marker-position">x: {marker.x}%, y: {marker.y}%</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ImageArea } from "./ImageArea";
 import { PartsList } from "./PartsList";
@@ -28,7 +27,6 @@ const BikePartMapper = () => {
   const [isGuidedMode, setIsGuidedMode] = useState(true);
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
 
-  // Hardcoded parts data for mapping
   const parts: Part[] = [
     { partNumber: 1, partName: "Front Disc Brake", view: "LHS", Group: 1 },
     { partNumber: 2, partName: "Front Tire", view: "LHS", Group: 1 },
@@ -54,7 +52,6 @@ const BikePartMapper = () => {
     { partNumber: 11, partName: "Oil Filter", view: "RHS", Group: 6 }
   ];
 
-  // Filter parts by current view
   const filteredParts = parts.filter(part => part.view === currentView);
   const currentPart = filteredParts[currentPartIndex];
   
@@ -66,7 +63,6 @@ const BikePartMapper = () => {
     const y = ((e.clientY - rect.top) / rect.height) * 100;
 
     if (isGuidedMode && currentPart) {
-      // In guided mode, add the current part from the sequence
       const newMarker: PartMarker = {
         id: currentPart.partNumber,
         x: Number(x.toFixed(2)),
@@ -75,13 +71,11 @@ const BikePartMapper = () => {
         value: "",
       };
 
-      // Check if this part already exists
       const existingMarkerIndex = markers.findIndex(
         m => m.name === currentPart.partName && m.id === currentPart.partNumber
       );
 
       if (existingMarkerIndex >= 0) {
-        // Update existing marker position
         const updatedMarkers = [...markers];
         updatedMarkers[existingMarkerIndex] = {
           ...updatedMarkers[existingMarkerIndex],
@@ -90,19 +84,15 @@ const BikePartMapper = () => {
         };
         setMarkers(updatedMarkers);
       } else {
-        // Add new marker
         setMarkers([...markers, newMarker]);
       }
 
-      // Move to next part if available
       if (currentPartIndex < filteredParts.length - 1) {
         setCurrentPartIndex(currentPartIndex + 1);
       } else {
-        // End of parts for this view
         setIsGuidedMode(false);
       }
     } else {
-      // Standard mode - add new marker
       const newMarker: PartMarker = {
         id: markers.length + 1,
         x: Number(x.toFixed(2)),
