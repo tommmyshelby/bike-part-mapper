@@ -1,0 +1,99 @@
+
+.image-mapper-container {
+  display: flex;
+  height: calc(100vh - 120px);
+  gap: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-mapper-sidebar {
+  flex: 0 0 300px;
+  background: white;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.canvas-container {
+  flex: 1;
+  position: relative;
+  background-color: #e6e6e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mapping-canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.empty-canvas-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #888;
+  font-size: 18px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.upload-section, .markers-section {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.export-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.2s;
+}
+
+.export-button:hover {
+  background-color: #3a7bc8;
+}
+
+@media (max-width: 768px) {
+  .image-mapper-container {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .image-mapper-sidebar {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  
+  .canvas-container {
+    height: 500px;
+  }
+}
